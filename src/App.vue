@@ -29,6 +29,9 @@ export default {
       console.log(res.data.result.stage)
       this.action = res.data.result.stage
     })
+  },
+  mounted() {
+    document.getElementById('base').style.display = 'none'
   }
 }
 </script>
