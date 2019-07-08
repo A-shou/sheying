@@ -2,6 +2,16 @@
     <div>
       <img class="logo" src="../../static/logo.png" alt="">
       <img class="bg" src="../../static/bg.jpg" alt="">
+
+      <div @click="tishi = false" v-if="tishi" class="zzbox">
+        <div @click.stop>
+          <p style="margin-bottom: 0.2rem;">提示</p>
+          <p style="margin-bottom: 0.2rem;">{{txmassage}}</p>
+          <p style="text-align: right;">
+            <span @click="tishi = false">确认</span>
+          </p>
+        </div>
+      </div>
       
       <div class="sebox" style="padding-top: 2rem;">
         <img style="width: 5rem;margin: 0 auto 0.3rem;" src="../../static/font2.png" alt="">
@@ -26,7 +36,9 @@
         name: "sec",
         data () {
           return {
-            list: []
+            list: [],
+            txmassage: '',
+            tishi: false
           }
         },
         beforeMount() {
@@ -42,7 +54,12 @@
             this.$http.post('vote/pictures', {
               id: id
             }).then(res => {
-              this.getList()
+              if (res.data.code == 200) {
+                this.getList()
+              } else {
+                this.txmassage = res.data.msg
+                this.tishi = true
+              }
             })
           }
         }
@@ -50,6 +67,23 @@
 </script>
 
 <style scoped>
+  .zzbox{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .zzbox > div{
+    padding: 0.2rem;
+    background: #fff;
+    width: 5rem;
+  }
 .sebox{
   position: relative;
   z-index: 100;
