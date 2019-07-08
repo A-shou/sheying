@@ -77,6 +77,13 @@
         </div>
       </div>
 
+      <div v-if="valueDeterminateshow" style="z-index: 100;" class="zzbox">
+        <div style="background: #fff;width: 3rem;height: 1rem;line-height: 0.5rem;text-align: center;font-size: 0.28rem;">
+          <p>上传进度</p>
+          <p>{{valueDeterminate ? valueDeterminate : ''}}</p>
+        </div>
+      </div>
+
       <div style="z-index: 100;" v-if="submitboxshow" class="zzbox">
         <div>
           <p style="margin-bottom: 0.2rem;">填写信息</p>
@@ -115,7 +122,8 @@
                 organization: '',
                 files: []
               },
-              valueDeterminate: null
+              valueDeterminate: null,
+              valueDeterminateshow: false
             }
         },
       beforeMount () {
@@ -174,12 +182,17 @@
                 'Content-Type': 'multipart/form-data',
               },
               onUploadProgress: progressEvent => {  //获取上传进度
-                this.valueDeterminate = (progressEvent.loaded / progressEvent.total * 100 | 0)
+                this.valueDeterminate = (progressEvent.loaded / progressEvent.total * this.list.length | 0) + '/' + this.list.length
               }
             }
 
+            this.submitboxshow = false
+            this.valueDeterminateshow = true
+
             this.$http(options).then(res => {
-              console.log(res)
+              this.valueDeterminateshow = false
+              this.txmassage = '提交成功'
+              this.tishi = true
             }).catch(err => {
               console.log(err)
             })
