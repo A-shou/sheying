@@ -114,7 +114,8 @@
                 mobile: '',
                 organization: '',
                 files: []
-              }
+              },
+              valueDeterminate: null
             }
         },
       beforeMount () {
@@ -154,17 +155,30 @@
               return
             }
 
-            let obj = {...this.submitData}
-            obj.files = []
+            localStorage.setItem('phone', this.submitData.mobile)
+
+            let formData = new window.FormData();
+            formData.append('name', this.submitData.name);
+            formData.append('mobile', this.submitData.mobile);
+            formData.append('organization', this.submitData.organization);
+
             this.list.forEach(item => {
-              obj.files.push(item.data)
+              formData.append('files', item.data);
             })
 
-            localStorage.setItem('phone', obj.mobile)
+            var options = {
+              url: 'member/join',
+              data: formData,
+              method: 'post',
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+              onUploadProgress: progressEvent => {  //获取上传进度
+                this.valueDeterminate = (progressEvent.loaded / progressEvent.total * 100 | 0)
+              }
+            }
 
-            console.log(obj)
-
-            this.$http.post('member/join', obj).then(res => {
+            this.$http(options).then(res => {
               console.log(res)
             }).catch(err => {
               console.log(err)
