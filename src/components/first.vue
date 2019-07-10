@@ -153,17 +153,13 @@
         }
       },
       beforeMount () {
-          if (localStorage.getItem('phone')) {
-            this.$http.post('member/get', {
-              mobile: localStorage.getItem('phone')
-            }).then(res => {
-              this.submitData = {
-                  name: res.data.result.name,
-                  mobile: res.data.result.mobile,
-                  organization: res.data.result.organization,
-                  files: []
-              }
-            })
+          if (localStorage.getItem('phone') && localStorage.getItem('phone') != '') {
+            this.submitData = {
+              name: localStorage.getItem('name'),
+              mobile: localStorage.getItem('phone'),
+              organization: localStorage.getItem('organization'),
+              files: []
+            }
           }
       },
       methods: {
@@ -190,6 +186,8 @@
             }
 
             localStorage.setItem('phone', this.submitData.mobile)
+            localStorage.setItem('name', this.submitData.name)
+            localStorage.setItem('organization', this.submitData.organization)
 
             let formData = new window.FormData();
             formData.append('name', this.submitData.name);
@@ -234,8 +232,8 @@
             this.pos -= 7.5
           },
           getFile (event) {	//获取本地文件
-            if (event.target.files[0].size > (1024 * 1024 * 10)) {
-              this.txmassage = '请选择小于10M的图片'
+            if (event.target.files[0].size > (1024 * 1024 * 4)) {
+              this.txmassage = '请选择小于4M的图片'
               this.tishi = true
             } else {
               let that = this
@@ -279,11 +277,12 @@
   }
   .f_box{
     position: fixed;
-    overflow: auto;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .fbox{
     width: 22.5rem;

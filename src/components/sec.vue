@@ -72,15 +72,21 @@
             })
           },
           vote (id) {
-            this.$http.post('vote/pictures', {
+            this.$emit('setload', true)
+            this.$http.post('vote/submit', {
               id: id
             }).then(res => {
+              this.$emit('setload', false)
               if (res.data.code == 200) {
                 this.getList()
+                this.txmassage = '投票成功'
+                this.tishi = true
               } else {
                 this.txmassage = res.data.msg
                 this.tishi = true
               }
+            }).catch(err => {
+              this.$emit('setload', false)
             })
           }
         }
@@ -105,10 +111,10 @@
     background: #fff;
     width: 5rem;
   }
-.sebox{
-  position: relative;
-  z-index: 100;
-}
+  .sebox{
+    position: relative;
+    z-index: 100;
+  }
   .se_tishi {
     text-align: center;
     font-size: 0.28rem;
@@ -135,6 +141,8 @@
     height: 2.2rem;
     background: #fff;
   }
-  .se_btn{
-      color: #fff;
-    background: #460a0d
+  .se_btn {
+    color: #fff;
+    background: #460a0d;
+  }
+</style>

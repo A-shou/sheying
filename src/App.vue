@@ -1,8 +1,17 @@
 <template>
   <div id="app">
-    <v-fbox v-if="action == 1"></v-fbox>
-    <v-sec v-if="action == 2"></v-sec>
-    <v-the v-if="action == 0"></v-the>
+    <v-fbox @setload="setload" v-if="action == 1"></v-fbox>
+    <v-sec @setload="setload" v-if="action == 2"></v-sec>
+    <v-the @setload="setload" v-if="action == 0"></v-the>
+
+    <div v-if="loading" class="load">
+        <div id="preloader_2">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -22,6 +31,12 @@ export default {
   data () {
     return {
       action: 100,
+      loading: false
+    }
+  },
+  methods: {
+    setload (data) {
+      this.loading = data
     }
   },
   beforeMount() {
@@ -39,6 +54,17 @@ body{
 }
 textarea,input{
   font:normal normal 16px/1.5 Microsoft YaHei,tahoma,arial,Hiragino Sans GB,\\5b8b\4f53,sans-serif;
+}
+.load{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,0.4);
 }
 img{
   display:block;
