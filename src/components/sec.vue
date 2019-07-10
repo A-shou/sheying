@@ -1,7 +1,7 @@
 <template>
-    <div>
-      <img class="logo" src="../../static/logo.png" alt="">
-      <img class="bg" src="../../static/bg.jpg" alt="">
+    <div v-show='show'>
+      <img class="logo" src="../assets/logo.png" alt="">
+      <img class="bg" src="../assets/bg.jpg" alt="">
 
       <div @click="tishi = false" v-if="tishi" class="zzbox">
         <div @click.stop>
@@ -12,9 +12,9 @@
           </p>
         </div>
       </div>
-      
+
       <div class="sebox" style="padding-top: 2rem;">
-        <img style="width: 5rem;margin: 0 auto 0.3rem;" src="../../static/font2.png" alt="">
+        <img style="width: 5rem;margin: 0 auto 0.3rem;" src="../assets/font2.png" alt="">
         <p class="se_tishi">(每人每日可投十票)</p>
 
         <div class="se_listbox">
@@ -37,8 +37,29 @@
         data () {
           return {
             list: [],
+            count : 0,
+            show : false,
             txmassage: '',
             tishi: false
+          }
+        },
+        mounted () {
+          var _this = this
+          let imgs = document.querySelectorAll('img')
+          Array.from(imgs).forEach((item)=>{
+            let img = new Image()
+            img.onload = ()=>{
+              this.count++
+            }
+            img.src=item.getAttribute('src')
+          })
+        },
+        watch : {
+          count (val,oldval) {
+            if(val == 3){
+              this.show = true
+              document.getElementById('base').style.display = 'none'
+            }
           }
         },
         beforeMount() {
@@ -116,6 +137,4 @@
   }
   .se_btn{
       color: #fff;
-    background: #460a0d;
-  }
-</style>
+    background: #460a0d

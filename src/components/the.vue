@@ -1,13 +1,13 @@
 <template>
-    <div>
-      <img class="logo" src="../../static/logo.png" alt="">
-      <img class="bg" src="../../static/bg.jpg" alt="">
+    <div v-show='show'>
+      <img class="logo" src="../assets/logo.png" alt="">
+      <img class="bg" src="../assets/bg.jpg" alt="">
 
       <div class="sebox" style="padding-top: 2rem;">
-        <img style="width: 5rem;margin: 0 auto 1.5rem;" src="../../static/font3.png" alt="">
+        <img style="width: 5rem;margin: 0 auto 1.5rem;" src="../assets/font3.png" alt="">
 
         <div>
-          <img class="t_title" src="../../static/t_font1.png" alt="">
+          <img class="t_title" src="../assets/t_font1.png" alt="">
 
           <div class="t_listbox">
             <div v-for="item in 2" class="t_list1">
@@ -20,7 +20,7 @@
         </div>
 
         <div>
-          <img class="t_title" src="../../static/t_font2.png" alt="">
+          <img class="t_title" src="../assets/t_font2.png" alt="">
 
           <div class="t_listbox">
             <div v-for="item in 3" class="t_list2">
@@ -33,7 +33,7 @@
         </div>
 
         <div>
-          <img class="t_title" src="../../static/t_font3.png" alt="">
+          <img class="t_title" src="../assets/t_font3.png" alt="">
 
           <div class="t_listbox">
             <div v-for="item in 5" class="t_list2">
@@ -46,7 +46,7 @@
         </div>
 
         <div>
-          <img class="t_title" src="../../static/t_font4.png" alt="">
+          <img class="t_title" src="../assets/t_font4.png" alt="">
 
           <div class="t_listbox">
             <div v-for="item in 5" class="t_list2">
@@ -65,7 +65,33 @@
 
 <script>
     export default {
-        name: "the"
+        name: "the",
+      data () {
+          return {
+            count : 0,
+            show : false,
+          }
+      },
+      mounted () {
+        var _this = this
+        let imgs = document.querySelectorAll('img')
+        console.log(imgs)
+        Array.from(imgs).forEach((item)=>{
+          let img = new Image()
+          img.onload = ()=>{
+            this.count++
+          }
+          img.src=item.getAttribute('src')
+        })
+      },
+      watch : {
+        count (val,oldval) {
+          if(val == 7){
+            this.show = true
+            document.getElementById('base').style.display = 'none'
+          }
+        }
+      },
     }
 </script>
 

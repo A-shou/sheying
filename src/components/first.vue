@@ -1,5 +1,5 @@
 <template>
-    <div class="f_box">
+    <div v-show='show' class="f_box">
       <div class="fbox" :style="{'transform': 'translateX(-' + pos + 'rem)'}">
 
         <div>
@@ -17,8 +17,8 @@
 
         <div>
           <div class="f_1_box">
-            <img class="animated zoomIn" style="width: 6rem;" src="../../static/img1.png" alt="">
-            <img class="animated zoomIn font1" style="animation-delay: 0.4s;" src="../../static/font1.png" alt="">
+            <img class="animated zoomIn" style="width: 6rem;" src="../assets/img1.png" alt="">
+            <img class="animated zoomIn font1" style="animation-delay: 0.4s;" src="../assets/font1.png" alt="">
           </div>
 
           <div class="f_1_text animated fadeInUp" style="animation-delay: 0.8s;">
@@ -30,7 +30,7 @@
           <div class="filebox">
             <div v-for="(item, index) in list">
               <img :src="item.b64url" class="fileimg" alt="">
-              <img @click="remove(index)" class="remove" src="../../static/remove.png" alt="">
+              <img @click="remove(index)" class="remove" src="../assets/remove.png" alt="">
             </div>
           </div>
 
@@ -43,36 +43,36 @@
         <div class="r_l rbox animated fadeInLeft" style="animation-delay: 0.8s;">
           <div @click="move_r">
             <p>返回<br/>首页</p>
-            <img src="../../static/arrow2.png" alt="">
+            <img src="../assets/arrow2.png" alt="">
           </div>
           <div @click="move_f">
             <p>查看<br/>规则</p>
-            <img src="../../static/arrow1.png" alt="">
+            <img src="../assets/arrow1.png" alt="">
           </div>
         </div>
 
         <div class="r_r rbox animated fadeInRight" style="animation-delay: 0.8s;">
           <div @click="move_r">
             <p>上传<br/>作品</p>
-            <img src="../../static/arrow2.png" alt="">
+            <img src="../assets/arrow2.png" alt="">
           </div>
           <div @click="move_f">
             <p>返回<br/>首页</p>
-            <img src="../../static/arrow1.png" alt="">
+            <img src="../assets/arrow1.png" alt="">
           </div>
         </div>
 
       </div>
 
-      <img class="logo" src="../../static/logo.png" alt="">
-      <img class="bg" src="../../static/bg.jpg" alt="">
+      <img class="logo" src="../assets/logo.png" alt="">
+      <img class="bg" src="../assets/bg.jpg" alt="">
 
       <div @click="tishi = false" v-if="tishi" class="zzbox">
         <div @click.stop>
           <p style="margin-bottom: 0.2rem;">提示</p>
           <p style="margin-bottom: 0.2rem;">{{txmassage}}</p>
           <p style="text-align: right;">
-            <span @click="tishi = false">确认</span>
+            <span class="qr" @click="tishi = false">确认</span>
           </p>
         </div>
       </div>
@@ -84,24 +84,29 @@
         </div>
       </div>
 
-      <div style="z-index: 100;" v-if="submitboxshow" class="zzbox">
-        <div>
-          <p style="margin-bottom: 0.2rem;">填写信息</p>
-          <div class="inputbox">
-            <input v-model="submitData.name" type="text" placeholder="作者姓名">
+      <div style="z-index: 100;" @click="submitboxshow = false" v-if="submitboxshow" class="zzbox">
+        <div @click.stop>
+          <img src="../assets/bg2.jpg" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;opacity: 0.5;" alt="">
+
+          <div style="position: relative;z-index: 10;">
+            <p style="margin-bottom: 0.4rem;font-size: 0.36rem;text-align: center;">填写信息</p>
+            <div class="inputbox">
+              <input v-model="submitData.name" type="text" placeholder="作者姓名">
+            </div>
+
+            <div class="inputbox">
+              <input v-model="submitData.mobile" type="number" placeholder="手机号">
+            </div>
+
+            <div class="inputbox">
+              <input v-model="submitData.organization" type="text" placeholder="所属单位">
+            </div>
+
+            <p style="text-align: right;">
+              <span class="qr" @click="submit">确认</span>
+            </p>
           </div>
 
-          <div class="inputbox">
-            <input v-model="submitData.mobile" type="number" placeholder="手机号">
-          </div>
-
-          <div class="inputbox">
-            <input v-model="submitData.organization" type="text" placeholder="所属单位">
-          </div>
-
-          <p style="text-align: right;">
-            <span @click="submit">确认</span>
-          </p>
         </div>
       </div>
     </div>
@@ -111,6 +116,8 @@
     export default {
         data () {
             return {
+              count : 0,
+              show : false,
               tishi: false,
               pos: 7.5,
               list: [],
@@ -126,6 +133,25 @@
               valueDeterminateshow: false
             }
         },
+      mounted () {
+        var _this = this
+        let imgs = document.querySelectorAll('img')
+        Array.from(imgs).forEach((item)=>{
+          let img = new Image()
+          img.onload = ()=>{
+            this.count++
+          }
+          img.src=item.getAttribute('src')
+        })
+      },
+      watch : {
+        count (val,oldval) {
+          if(val == 8){
+            this.show = true
+            document.getElementById('base').style.display = 'none'
+          }
+        }
+      },
       beforeMount () {
           if (localStorage.getItem('phone')) {
             this.$http.post('member/get', {
@@ -147,8 +173,8 @@
               this.tishi = true
               return
             }
-            if (this.submitData.mobile == '') {
-              this.txmassage = '请填写手机号'
+            if (!(/^1[3465789]\d{9}$/.test(this.submitData.mobile))) {
+              this.txmassage = '请填写正确的手机号'
               this.tishi = true
               return
             }
@@ -182,7 +208,7 @@
                 'Content-Type': 'multipart/form-data',
               },
               onUploadProgress: progressEvent => {  //获取上传进度
-                this.valueDeterminate = (progressEvent.loaded / progressEvent.total * this.list.length | 0) + '/' + this.list.length
+                this.valueDeterminate = parseInt(progressEvent.loaded / progressEvent.total * this.list.length | 0) + '/' + this.list.length
               }
             }
 
@@ -193,6 +219,7 @@
               this.valueDeterminateshow = false
               this.txmassage = '提交成功'
               this.tishi = true
+              this.list = []
             }).catch(err => {
               console.log(err)
             })
@@ -245,6 +272,10 @@
     padding: 0.2rem;
     background: #fff;
     width: 5rem;
+    box-shadow: 0.05rem 0.05rem 0.2rem rgba(0,0,0,0.3);
+    border-radius: 0.1rem;
+    position: relative;
+    overflow: hidden;
   }
   .f_box{
     position: fixed;
@@ -406,10 +437,11 @@
     border: 1px solid #ddd;
     overflow: hidden;
     border-radius: 0.1rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
   }
   .inputbox input{
     width: 100%;
+    height: 0.5rem;
     outline: none;
     padding: 0.1rem;
     border: 0;

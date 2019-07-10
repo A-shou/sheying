@@ -3,21 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import axios from 'axios'
-import '../static/animate.css'
-
-Vue.use(axios)
-
+import './assets/animate.css'
 
 axios.defaults.baseURL = 'http://148.70.186.100:8227/api/'
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
-  Vue.prototype.$http = axios
+Vue.prototype.$http = axios
 
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   components: { App },
   template: '<App/>'
 })
+
+

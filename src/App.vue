@@ -26,12 +26,8 @@ export default {
   },
   beforeMount() {
     this.$http.post('common/check').then(res => {
-      console.log(res.data.result.stage)
       this.action = res.data.result.stage
     })
-  },
-  mounted() {
-    document.getElementById('base').style.display = 'none'
   }
 }
 </script>
@@ -93,5 +89,10 @@ a{
   right: 0;
   margin: auto;
   z-index: 100;
+}
+.qr{
+  padding-top: 0.3rem;
+  color: #831645;
+  display: inline-block;
 }
 </style>
