@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-fbox @setload="setload" v-if="action == 1"></v-fbox>
-    <v-sec @setload="setload" v-if="action == 2"></v-sec>
+    <v-sec :maxVoteCount="maxVoteCount" @setload="setload" v-if="action == 2"></v-sec>
     <v-the @setload="setload" v-if="action == 0"></v-the>
 
     <div v-if="loading" class="load">
@@ -30,8 +30,9 @@ export default {
   },
   data () {
     return {
-      action: 0,
-      loading: false
+      action: 100,
+      loading: false,
+      maxVoteCount: ''
     }
   },
   methods: {
@@ -40,9 +41,10 @@ export default {
     }
   },
   beforeMount() {
-    // this.$http.post('common/check').then(res => {
-    //   this.action = res.data.result.stage
-    // })
+    this.$http.post('common/check').then(res => {
+      this.action = res.data.result.stage
+      this.maxVoteCount = res.data.result.maxVoteCount
+    })
   }
 }
 </script>

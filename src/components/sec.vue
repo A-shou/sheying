@@ -15,7 +15,7 @@
 
       <div class="sebox" style="padding-top: 2rem;">
         <img style="width: 5rem;margin: 0 auto 0.3rem;" src="../assets/font2.png" alt="">
-        <p class="se_tishi">(每人每日可投十票)</p>
+        <p class="se_tishi">(每人每日可投{{maxVoteCount}}票)</p>
 
         <div class="se_listbox">
           <div class="se_list" v-for="item in list">
@@ -34,6 +34,7 @@
 <script>
     export default {
         name: "sec",
+        props:['maxVoteCount'],
         data () {
           return {
             list: [],
