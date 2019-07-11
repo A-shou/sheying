@@ -10,11 +10,11 @@
           <img class="t_title" src="../assets/t_font1.png" alt="">
 
           <div class="t_listbox">
-            <div v-for="item in 2" class="t_list1">
+            <div v-for="item in list1" class="t_list1">
               <div class="imgbox">
-                <img src="" alt="">
+                <img :src="item.url" alt="">
               </div>
-              <p>作者：</p>
+              <p>作者：{{item.name}}</p>
             </div>
           </div>
         </div>
@@ -23,11 +23,11 @@
           <img class="t_title" src="../assets/t_font2.png" alt="">
 
           <div class="t_listbox">
-            <div v-for="item in 3" class="t_list2">
+            <div v-for="item in list2" class="t_list2">
               <div class="imgbox">
-                <img src="" alt="">
+                <img :src="item.url" alt="">
               </div>
-              <p>作者：</p>
+              <p>作者：{{item.name}}</p>
             </div>
           </div>
         </div>
@@ -36,11 +36,11 @@
           <img class="t_title" src="../assets/t_font3.png" alt="">
 
           <div class="t_listbox">
-            <div v-for="item in 5" class="t_list2">
+            <div v-for="item in list3" class="t_list2">
               <div class="imgbox">
-                <img src="" alt="">
+                <img :src="item.url" alt="">
               </div>
-              <p>作者：</p>
+              <p>作者：{{item.name}}</p>
             </div>
           </div>
         </div>
@@ -49,11 +49,11 @@
           <img class="t_title" src="../assets/t_font4.png" alt="">
 
           <div class="t_listbox">
-            <div v-for="item in 5" class="t_list2">
+            <div v-for="item in list4" class="t_list2">
               <div class="imgbox">
-                <img src="" alt="">
+                <img :src="item.url" alt="">
               </div>
-              <p>作者：</p>
+              <p>作者：{{item.name}}</p>
             </div>
           </div>
         </div>
@@ -70,6 +70,10 @@
           return {
             count : 0,
             show : false,
+            list1: [],
+            list2: [],
+            list3: [],
+            list4: []
           }
       },
       mounted () {
@@ -83,6 +87,22 @@
           }
           img.src=item.getAttribute('src')
         })
+      },
+      beforeMount () {
+          this.$http.post('/vote/prize').then(res => {
+            console.log(res.data.result.list)
+            res.data.result.list.forEach(item => {
+              if (item.prize.sorted == 1) {
+                this.list1 = item.pictures
+              } else if (item.prize.sorted == 2) {
+                this.list2 = item.pictures
+              } else if (item.prize.sorted == 3) {
+                this.list3 = item.pictures
+              } else if (item.prize.sorted == 4) {
+                this.list4 = item.pictures
+              }
+            })
+          })
       },
       watch : {
         count (val,oldval) {

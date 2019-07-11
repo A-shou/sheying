@@ -30,7 +30,7 @@ export default {
   },
   data () {
     return {
-      action: 100,
+      action: 0,
       loading: false
     }
   },
@@ -40,9 +40,9 @@ export default {
     }
   },
   beforeMount() {
-    this.$http.post('common/check').then(res => {
-      this.action = res.data.result.stage
-    })
+    // this.$http.post('common/check').then(res => {
+    //   this.action = res.data.result.stage
+    // })
   }
 }
 </script>

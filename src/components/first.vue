@@ -17,12 +17,13 @@
 
         <div>
           <div class="f_1_box">
+            <p class="tit_text animated fadeIn" style="animation-delay: 0.6s;">教育部“ 中俄地方合作交流年”项目</p>
             <img class="animated zoomIn" style="width: 6rem;" src="../assets/img1.png" alt="">
             <img class="animated zoomIn font1" style="animation-delay: 0.4s;" src="../assets/font1.png" alt="">
           </div>
 
           <div class="f_1_text animated fadeInUp" style="animation-delay: 0.8s;">
-            由北京外国语大学与中俄头条客户端共同发起的“美丽中国”&“美丽俄罗斯”摄影大赛正式启动,欢迎广大中俄网友踊跃参与
+            由北京外国语大学与中俄头条客户端共同发起的“美丽中国”&“美丽俄罗斯”摄影大赛正式启动。欢迎广大中俄网友踊跃参与！
           </div>
         </div>
 
@@ -99,7 +100,7 @@
             </div>
 
             <div class="inputbox">
-              <input v-model="submitData.organization" type="text" placeholder="所属单位">
+              <input v-model="submitData.organization" type="text" placeholder="所属院校/单位">
             </div>
 
             <p style="text-align: right;">
@@ -444,5 +445,20 @@
     outline: none;
     padding: 0.1rem;
     border: 0;
+  }
+  .tit_text{
+    text-align: center;
+    transform: rotate(-6deg) translateY(0.4rem) translateX(-10%);
+    width: 120%;
+    color: #fff;
+    text-shadow: 0.02rem 0.02rem rgba(0,0,0,0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 50;
+    background: rgba(0,0,0,0.4);
+    line-height: 0.6rem;
   }
 </style>

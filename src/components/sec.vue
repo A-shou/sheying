@@ -73,9 +73,7 @@
           },
           vote (id) {
             this.$emit('setload', true)
-            this.$http.post('vote/submit', {
-              id: id
-            }).then(res => {
+            this.$http.post('vote/submit?id=' + id).then(res => {
               this.$emit('setload', false)
               if (res.data.code == 200) {
                 this.getList()
@@ -110,6 +108,9 @@
     padding: 0.2rem;
     background: #fff;
     width: 5rem;
+    border-radius: 0.1rem;
+    position: relative;
+    overflow: hidden;
   }
   .sebox{
     position: relative;
