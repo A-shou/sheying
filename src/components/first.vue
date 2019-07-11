@@ -17,7 +17,7 @@
 
         <div>
           <div class="f_1_box">
-            <p class="tit_text animated fadeIn" style="animation-delay: 0.6s;">教育部“ 中俄地方合作交流年”项目</p>
+            <img src="../assets/font4.png" class="tit_text animated fadeIn" style="animation-delay: 0.6s;" />
             <img class="animated zoomIn" style="width: 6rem;" src="../assets/img1.png" alt="">
             <img class="animated zoomIn font1" style="animation-delay: 0.4s;" src="../assets/font1.png" alt="">
           </div>
@@ -447,18 +447,12 @@
     border: 0;
   }
   .tit_text{
-    text-align: center;
-    transform: rotate(-6deg) translateY(0.4rem) translateX(-10%);
-    width: 120%;
-    color: #fff;
-    text-shadow: 0.02rem 0.02rem rgba(0,0,0,0.6);
+    width: 5.5rem;
     position: absolute;
-    top: 0;
+    top: 0.3rem;
     left: 0;
     right: 0;
     margin: 0 auto;
     z-index: 50;
-    background: rgba(0,0,0,0.4);
-    line-height: 0.6rem;
   }
 </style>
