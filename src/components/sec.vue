@@ -19,7 +19,9 @@
 
         <div class="se_listbox">
           <div class="se_list" v-for="item in list">
-            <div class="imgbox se_imgbox">
+            <div class="imgbox se_imgbox"
+              @click="showurl = item.url; imgshow = true"
+            >
               <img :src="item.url" alt="">
             </div>
             <p>作者：{{item.name}}</p>
@@ -28,15 +30,27 @@
           </div>
         </div>
       </div>
+
+    <div v-if="imgshow">
+      <v-show-img v-model="imgshow" :url="showurl"></v-show-img>
+    </div>
+
     </div>
 </template>
 
 <script>
+  import showImg from './showImg'
+
     export default {
+        components: {
+          'v-show-img': showImg
+        },
         name: "sec",
         props:['maxVoteCount'],
         data () {
           return {
+            showurl: '',
+            imgshow: false,
             list: [],
             count : 0,
             show : false,

@@ -11,7 +11,9 @@
 
           <div class="t_listbox">
             <div v-for="item in list1" class="t_list1">
-              <div class="imgbox">
+              <div class="imgbox"
+                 @click="showurl = item.url; imgshow = true"
+              >
                 <img :src="item.url" alt="">
               </div>
               <p>作者：{{item.name}}</p>
@@ -24,7 +26,9 @@
 
           <div class="t_listbox">
             <div v-for="item in list2" class="t_list2">
-              <div class="imgbox">
+              <div class="imgbox"
+                   @click="showurl = item.url; imgshow = true"
+              >
                 <img :src="item.url" alt="">
               </div>
               <p>作者：{{item.name}}</p>
@@ -37,7 +41,9 @@
 
           <div class="t_listbox">
             <div v-for="item in list3" class="t_list2">
-              <div class="imgbox">
+              <div class="imgbox"
+                   @click="showurl = item.url; imgshow = true"
+              >
                 <img :src="item.url" alt="">
               </div>
               <p>作者：{{item.name}}</p>
@@ -50,7 +56,9 @@
 
           <div class="t_listbox">
             <div v-for="item in list4" class="t_list2">
-              <div class="imgbox">
+              <div class="imgbox"
+                   @click="showurl = item.url; imgshow = true"
+              >
                 <img :src="item.url" alt="">
               </div>
               <p>作者：{{item.name}}</p>
@@ -60,14 +68,24 @@
 
 
       </div>
+
+      <div v-if="imgshow">
+        <v-show-img v-model="imgshow" :url="showurl"></v-show-img>
+      </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "the",
+  import showImg from './showImg'
+
+  export default {
+      components: {
+        'v-show-img': showImg
+      },
       data () {
           return {
+            showurl: '',
+            imgshow: false,
             count : 0,
             show : false,
             list1: [],
